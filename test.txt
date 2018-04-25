@@ -1,2 +1,3 @@
-test 666
-i insert a new line
+my first commit in github!
+hello world!
+i add a new line.
