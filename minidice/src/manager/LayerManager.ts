@@ -32,13 +32,6 @@ module common
 
 	export class LayerManager
 	{
-		/**
-		 * 最底层
-		 */
-		private base_layer: egret.DisplayObjectContainer;
-
-		private ui_layer: egret.DisplayObjectContainer;
-
 		public constructor()
 		{
 
@@ -56,6 +49,15 @@ module common
 		}
 
 		/**
+		 * 最底层
+		 */
+		private base_layer: egret.DisplayObjectContainer;
+
+		private ui_layer: egret.DisplayObjectContainer;
+
+		private modal_layer: eui.Group;
+
+		/**
 		 * 图层字典
 		 */
 		private layerDict: any = {};
@@ -68,15 +70,30 @@ module common
 			this.base_layer.touchEnabled = false;
 
 			this.ui_layer = new eui.Group();
-			this.base_layer.touchEnabled = false;
+			this.ui_layer.touchEnabled = false;
+
+			this.modal_layer = new eui.Group();
+			this.modal_layer.touchEnabled = false;
 
 			this.resizeLayer(stage.stageWidth, stage.stageHeight);
-
-			stage.addEventListener(egret.Event.RESIZE, this.resizeHandler, this);
 
 			this.layerDict[LayerType.BASE_LAYER] = stage.addChild(this.base_layer);
 			this.layerDict[LayerType.UI_LAYER] = stage.addChild(this.ui_layer);
 
+			stage.addEventListener(egret.Event.RESIZE, this.resizeHandler, this);
+
+			this.modal_layer.addEventListener(egret.Event.ADDED, this.modalLayerAddedHandler, this);
+			this.modal_layer.addEventListener(egret.Event.REMOVED, this.modalLayerRemovedHandler, this);
+		}
+
+		private modalLayerAddedHandler(e: egret.Event): void
+		{
+
+		}
+
+		private modalLayerRemovedHandler(e: egret.Event): void
+		{
+			
 		}
 
 		private resizeLayer(width: number, height: number): void
